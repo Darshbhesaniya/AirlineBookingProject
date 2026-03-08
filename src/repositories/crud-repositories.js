@@ -1,4 +1,6 @@
-const { Logger } = require('../config')
+const { StatusCodes } = require('http-status-codes');
+const { Logger } = require('../config');
+const AppError = require('../utils/errors/app-error');
 
 class crudRepository {
     constructor(model){
@@ -15,13 +17,16 @@ class crudRepository {
         }
     }
 
-     async destroy(data){
+    async destroy(data){
         try {
             const response = await this.model.destroy({ 
                 where: {
                 id: data
             }
             });
+            if(!response){
+                  throw new AppError("Not able to find the resource",StatusCodes.NOT_FOUND)
+            }
             return response;
         } catch (error) {
             Logger.error("something went wrong in the crud Repo: destroy");
@@ -32,6 +37,9 @@ class crudRepository {
     async get(data){
          try {
             const response = await this.model.findByPk(data);
+             if(!response){
+                throw new AppError("Not able to find the resource",StatusCodes.NOT_FOUND)
+            }
             return response;
         } catch (error) {
             Logger.error("something went wrong in the crud Repo: get");
@@ -55,7 +63,11 @@ class crudRepository {
                 where:{
                     id:id
                 }
-            })
+            });
+            if(response[0] == 0){
+                 throw new AppError("Your airplane mode is not present in database",StatusCodes.NOT_FOUND)
+            }
+            console.log("crud response",response);
             return response;
         } catch (error) {
             Logger.error("something went wrong in the crud Repo: update");

@@ -3,9 +3,10 @@ const { ErrorResponse } = require('../utils/common');
 const AppError = require('../utils/errors/app-error');
 
 function validateCreateRequest(req, res, next){
-    if(!req.body.modelNumber){
+   
+    if(!req.body){
         ErrorResponse.message = 'something went Wrong while creating airplane';
-        ErrorResponse.error =  new AppError(['model number not found in the incoming request in correct form'], StatusCodes.BAD_REQUEST);
+        ErrorResponse.error =  new AppError(['City name not found in the incoming requestform'], StatusCodes.BAD_REQUEST);
         return res
                  .status(StatusCodes.BAD_REQUEST)
                  .json(ErrorResponse);
@@ -16,3 +17,4 @@ function validateCreateRequest(req, res, next){
 module.exports = {
     validateCreateRequest
 }
+
