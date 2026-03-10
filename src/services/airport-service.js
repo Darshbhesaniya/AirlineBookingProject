@@ -56,18 +56,17 @@ async function destroyAirport(id){
     }
 } 
 
-// async function updateAirplane(id,data){
-//     try {
-//         const response = await airplaneRepository.update(id,data);
-//         // console.log("service response",response);
-//         return response;
-//     } catch (error) {
-//         if(error.statusCode == StatusCodes.NOT_FOUND){
-//             throw new AppError('The Airplane you requested to update is not present',error.statusCode)
-//         }
-//          throw new AppError('Cannot update data of an airplanes', StatusCodes.INTERNAL_SERVER_ERROR)
-//     }
-// }
+async function updateAirport(id,data){
+    try {
+        const response = await airportRepository.update(id,data);
+        return response;
+    } catch (error) {
+        if(error.statusCode == StatusCodes.NOT_FOUND){
+            throw new AppError('The Airport you requested to update is not present',error.statusCode)
+        }
+         throw new AppError('Cannot update data of an airports', StatusCodes.INTERNAL_SERVER_ERROR)
+    }
+}
 
 
 module.exports = {
@@ -75,4 +74,5 @@ module.exports = {
     getAirports,
     getAirport,
     destroyAirport,
+    updateAirport
 }

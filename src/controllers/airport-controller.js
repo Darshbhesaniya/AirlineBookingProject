@@ -89,28 +89,33 @@ async function destroyAirport(req, res) {
     }
 }
 
-// async function updateAirplane(req, res) {
-//     try {
-//         const airplane = await AirplaneService.updateAirplane(
-//             req.params.id,
-//             req.body
-//         );
-//         SuccessResponse.data = airplane;
-//         return res
-//             .status(StatusCodes.OK)
-//             .json(SuccessResponse)
-//     } catch (error) {
-//         ErrorResponse.message = "something went Wrong while updating an airplane"
-//         ErrorResponse.error = error;
-//         return res
-//             .status(error.statusCode)
-//             .json(ErrorResponse);
-//     }
-// }
+async function updateAirport(req, res) {
+    try {
+        const airport = await AirportService.updateAirport(
+            req.params.id,{
+                name: req.body.name,
+                code: req.body.code,
+                address: req.body.address,
+                cityId: req.body.cityId
+            }
+        );
+        SuccessResponse.data = airport;
+        return res
+            .status(StatusCodes.OK)
+            .json(SuccessResponse)
+    } catch (error) {
+        ErrorResponse.message = "something went Wrong while updating an airplane"
+        ErrorResponse.error = error;
+        return res
+            .status(error.statusCode)
+            .json(ErrorResponse);
+    }
+}
 
 module.exports = {
     createAirport,
     getAirports,
     getAirport,
     destroyAirport,
+    updateAirport
 }
