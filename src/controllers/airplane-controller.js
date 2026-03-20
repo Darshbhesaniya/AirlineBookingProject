@@ -23,7 +23,7 @@ async function createAirplane(req, res) {
         ErrorResponse.message = "something went Wrong while creating airplane"
         ErrorResponse.error = error;
         return res
-            .status(error.statusCode)
+            .status(error.statusCode) 
             .json(ErrorResponse);
     }
 }
